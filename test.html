@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>API test</title>
+</head>
+
+<body>
+    <h1>안녕하세요</h1>
+    <p></p>
+    <script>
+        $.ajax({
+            method: "GET",
+            url: "https://dapi.kakao.com/v2/search/web",
+            data: { query: "무지" },
+            headers: {Authorization: "KakaoAK 334aa6316eac9ca7027d657dbc9e139f"}
+        })
+            .done(function (msg) {
+               console.log(msg.documents[0].title);
+               console.log(msg.documents[0].url);
+               $( "p" ).append( "<a href="+msg.documents[3].url+"><strong>"+msg.documents[3].title+"</strong></a>" );
+           
+ });
+    </script>
+</body>
+
+</html>
