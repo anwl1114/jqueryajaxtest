@@ -1,30 +1,38 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>API test</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>API 연습</title>
 </head>
 
 <body>
-    <h1>안녕하세요</h1>
+    <h1>API test</h1>
+    <input id="bookName" value="" type="text">
+    <button id="search">검색</button>
+
     <p></p>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script>
-        $.ajax({
-            method: "GET",
-            url: "https://dapi.kakao.com/v2/search/web",
-            data: { query: "무지" },
-            headers: {Authorization: "KakaoAK 334aa6316eac9ca7027d657dbc9e139f"}
-        })
-            .done(function (msg) {
-               console.log(msg.documents[0].title);
-               console.log(msg.documents[0].url);
-               $( "p" ).append( "<a href="+msg.documents[3].url+"><strong>"+msg.documents[3].title+"</strong></a>" );
-           
- });
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v3/search/book?target=title",
+                    data: { query: $("#bookName").val() },
+                    headers: { Authorization: "KakaoAK 334aa6316eac9ca7027d657dbc9e139f" }
+                })
+                    .done(function (msg) {
+                        console.log(msg.documents[0].title);
+                        console.log(msg.documents[0].thumbnail);
+                        $("p").append("<strong>" + msg.documents[0].title + "</strong>");
+                        $("p").append("<img src='" + msg.documents[0].thumbnail + "'/>");
+                    });
+            });
+        });
     </script>
 </body>
 
