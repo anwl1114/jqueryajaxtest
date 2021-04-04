@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="color.js"></script> -->
+    <title>API 연습</title>
+</head>
+
+<body>
+    <h1>API test</h1>
+    <span>
+    <input id="bookName" value=""  type="text"> 
+    <button onclick="nightDayHandler(this);" id="search">검색</button>
+</span>
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v3/search/book?target=title",
+                    data: { query: $("#bookName").val() },
+                    headers: { Authorization: "KakaoAK 334aa6316eac9ca7027d657dbc9e139f" }
+                })
+                    .done(function (msg) {
+                        console.log(msg.documents[0].title);
+                        console.log(msg.documents[0].thumbnail);
+		console.log(msg.documents[0].url);
+                        $("p").append("<strong>" + msg.documents[0].title + "</strong>");
+                        $("p").append("<img src='" + msg.documents[0].thumbnail + "'/>");
+		$("p").append( "<a href="+msg.documents[0].url+"  target='_blank' <strong>"+msg.documents[0].title+"</strong>" );
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
